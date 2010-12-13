@@ -29,7 +29,7 @@ Other requirements:
 Install
 -------
 
-Edit the vba file and type::
+Download_, edit the vba with VIm and type::
 
     :so %
 
@@ -167,3 +167,4 @@ limitation.
 .. _docutils: http://docutils.sourceforge.net
 .. _pygments: http://pygments.org
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
+.. _Download: http://www.vim.org/scripts/script.php?script_id=3367
