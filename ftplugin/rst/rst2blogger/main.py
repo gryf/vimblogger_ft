@@ -41,7 +41,6 @@ class Rst2Blogger(object):
         self.confirm_del = int(vim.eval("g:blogger_confirm_del"))
         self.stylesheets = vim.eval("g:blogger_stylesheets")
         self.pygments_class = vim.eval("g:blogger_pygments_class")
-        print self.pygments_class
         try:
             register(self.pygments_class)
         except NameError:

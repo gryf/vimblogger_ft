@@ -18,7 +18,6 @@ try:
     from pygments.formatters import HtmlFormatter
 
     def register(cssclass=None):
-        print "register"
         if cssclass:
             Pygments.cssclass = cssclass
         directives.register_directive('sourcecode', Pygments)
