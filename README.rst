@@ -4,11 +4,11 @@
 vimblogger_ft
 =============
 
-vimblogger_ft is a simple reStructuredText_ to Blogger Interface through VIm_.
+vimblogger_ft is a simple reStructuredText_ to Blogger interface through VIm_.
 
-As the name suggest it is a filetype plugin, which helps to create blog articles
-in rsST format and send them to blog site. It also provides commands for preview
-in browser and delete articles.
+As the name suggest it is a filetype plugin, which helps to create blog
+articles in rsST format and send them to blog site. It also provides commands
+for preview in browser and delete articles.
 
 Requirements
 ------------
@@ -22,7 +22,7 @@ Other requirements:
 
   - gdata_
   - docutils_
-  - pygments_ (optional)
+  - Pygments_ (optional)
 
 - Blogger account
 
@@ -32,7 +32,6 @@ Install
 Download_, edit the vba with VIm and type::
 
     :so %
-
 
 Or, clone this repository and put files in your ``~/.vim`` directory.
 
@@ -93,7 +92,7 @@ reST document structure
 It is assumed, that following template will be used::
 
     :Id:
-    :Title: Title for the blog
+    :Title: Title for the blog article
     :Date:
     :Modified:
     :Tags: some, tags
@@ -146,15 +145,62 @@ Note, that ``.. more`` will became HTML comment ``<!-- more -->`` which will
 prevent from displaying entire post on the bloggers front page, but will
 not have any visible effect during preview in browser.
 
-Additionally, if pygments is installed, there is sourcecode directive,
-simple syntax highlighter using Pygments module. Very simple usage could
-be as follows::
+Pygments code highlighting
+--------------------------
+
+Additionally, if Pygments is installed, there is ``sourcecode`` directive,
+simple syntax highlighter using Pygments module. Very simple usage for Python
+code could be as follows::
 
     .. sourcecode:: python
 
         import vim
         print vim.current.buffer.name
 
+Note, that ``sourcecode`` directive requires argument with the name of the
+lexer to use. If wrong/non existent lexer is provided, it will fall back to
+*text* lexer. For more information about available lexers, please refer to
+Pygments documentation.
+
+Directive ``sourcecode`` supports two options: ``:linenos:`` and
+``:cssclass:``.
+
+``:linenos:`` takes zero or one argument - if no arguments is provided, line
+numbers will be visible starting form 1. Provided integer will be the number
+of the first line.
+
+``:cssclass:`` can be use for changing default class name for block of code.
+Default class can be changed by appropriate option for plugin (see
+documentation), and defaults to "highlight".
+
+It is possible to use VIm colorschemes like desert (which is distributed with
+VIm), Zenburn_, Lucius_, Wombat_, inkpot_ or any other with Pygments.
+Assuming, that colorscheme *desert* should be used, there are two steps to
+achive it.
+
+First, python module containing Pygments *Style* class has to be generated.
+There is apropriate convertion tool in Pygments distribution -
+``scripts/vim2pygments.py``. Uage is simple as::
+
+    python Pygments/scripts/vim2pygments.py [path/to/vim/colors]/desert.vim > desert.py
+
+Which will create new python module ``desert.py`` containing class
+``DessertStyle``.
+
+To generate CSS stylesheet, it's enough to::
+
+    python rst2blogger/scripts/style2css.py desert.py -c VimDesert > desert.css
+
+VimDesert is the name of the class, which passed as an argument to
+``:cssclass:`` option of directive ``sourceocode``. It will be used as a main
+CSS class for code top ``<div>`` element. So, above example will looks like
+this::
+
+    .. sourcecode:: python
+        :cssclass: VimDesert
+
+        import vim
+        print vim.current.buffer.name
 
 Note: All headings for generated HTML by ``:SendBlogArticle`` will be
 shifted by 3, so the first heading will become <h3>, second <h4> and so
@@ -165,6 +211,10 @@ limitation.
 .. _VIm: http://www.vim.org
 .. _gdata: http://code.google.com/p/gdata-python-client
 .. _docutils: http://docutils.sourceforge.net
-.. _pygments: http://pygments.org
+.. _Pygments: http://pygments.org
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Download: http://www.vim.org/scripts/script.php?script_id=3367
+.. _Zenburn: http://www.vim.org/scripts/script.php?script_id=415
+.. _inkpot: http://www.vim.org/scripts/script.php?script_id=1143
+.. _Lucius: http://www.vim.org/scripts/script.php?script_id=2536
+.. _Wombat: http://www.vim.org/scripts/script.php?script_id=1778
